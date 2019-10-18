@@ -8,14 +8,24 @@ public class Room {
     private int floorNumber;
     private int roomCapacity;
     private static int count;
+    private static String abc;
     private static int absoluteMaxCapacityVariable;
-    private int maxCapacityVariable;
+    private static int maxCapacityVariable;
+    private static Scanner scanner = new Scanner(System.in);
 
     private static List<Room> rooms = new ArrayList<>(){};
     private static List<Integer> roomCapacityArray = new ArrayList<> () {};
 
-    public static void getUserInput() {
-        Scanner scanner = new Scanner(System.in);
+    public static void userOptions() {
+        System.out.print("Would you like to: \n a) View all rooms \n b) Make a booking \n c) View your bookings \n Please enter a b or c ");
+        abc = scanner.nextLine();
+        if (abc.equals("a")) {displayAllRooms(); }
+        else if (abc.equals("b")) {checkAbsoluteMaxCapacity(); }
+        else if (abc.equals("c")) {}
+        else {
+            System.out.println("Please enter a, b or c");}
+    }
+    public static void inputCountVariable(){
         System.out.print("How many people would you like to book for?  ");
         count = Integer.parseInt(scanner.nextLine());
     }
@@ -45,6 +55,7 @@ public class Room {
     }
 
     public static void checkAbsoluteMaxCapacity() {
+        inputCountVariable();
         createAbsoluteMaxCapacityVariable();
         if (count > absoluteMaxCapacityVariable) {
             System.out.println("It is not possible to book for more than " + absoluteMaxCapacityVariable + " people.");
@@ -120,7 +131,6 @@ public class Room {
                 70
         ));
 
-        getUserInput();
-        checkAbsoluteMaxCapacity();
+        userOptions();
     }
 }
