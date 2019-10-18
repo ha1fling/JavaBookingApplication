@@ -7,10 +7,10 @@ public class Room {
     private String roomType;
     private int floorNumber;
     private int roomCapacity;
-    private static int count;
-    private static String abc;
-    private static int absoluteMaxCapacityVariable;
-    private static int maxCapacityVariable;
+    private static int count; //user input number of people
+    private static String abc; //user input a b or c
+    private static int absoluteMaxCapacityVariable; //of all rooms
+    private static int maxCapacityVariable; //of rooms available at chosen time
     private static Scanner scanner = new Scanner(System.in);
 
     private static List<Room> rooms = new ArrayList<>(){};
@@ -20,7 +20,9 @@ public class Room {
         System.out.print("Would you like to: \n a) View all rooms \n b) Make a booking \n c) View your bookings \n Please enter a b or c ");
         abc = scanner.nextLine();
         if (abc.equals("a")) {displayAllRooms(); }
-        else if (abc.equals("b")) {checkAbsoluteMaxCapacity(); }
+        else if (abc.equals("b")) {
+            checkMaxCapacity();
+        }
         else if (abc.equals("c")) {}
         else {
             System.out.println("Please enter a, b or c");}
@@ -54,12 +56,32 @@ public class Room {
         }
     }
 
-    public static void checkAbsoluteMaxCapacity() {
+    //this will be the variable of the max people that can be hosted at a stated time
+//    public static void createMaxCapacityVariable(){
+//        for (Integer eachRoomCapacity: roomCapacityArray){
+//            if (eachRoomCapacity > absoluteMaxCapacityVariable) {
+//                absoluteMaxCapacityVariable = eachRoomCapacity;
+//            }
+//        }
+//    }
+    public static void checkMaxCapacity() {
         inputCountVariable();
         createAbsoluteMaxCapacityVariable();
         if (count > absoluteMaxCapacityVariable) {
             System.out.println("It is not possible to book for more than " + absoluteMaxCapacityVariable + " people.");
-            // get user to re-enter the value
+        }
+        else if (count > absoluteMaxCapacityVariable) { //this will become maxCapacityVariable when booking times have been implemented
+            System.out.println("We have rooms that can host this number, but they are not available at this time.");
+        }
+        else {
+            suitableSizeRooms();
+            }
+        }
+    public static void suitableSizeRooms() {
+        for (Room room : rooms) {
+            if (room.roomCapacity <= count){
+                room.displayOneRoom();
+            }
         }
     }
 
