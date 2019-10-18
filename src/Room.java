@@ -9,14 +9,18 @@ public class Room {
     private int roomCapacity;
     private static int count; //user input number of people
     private static String abc; //user input a b or c
+    private static String userName;
     private static int absoluteMaxCapacityVariable; //of all rooms
     private static int maxCapacityVariable; //of rooms available at chosen time
+    private static Boolean roomAvailable;
     private static Scanner scanner = new Scanner(System.in);
 
     private static List<Room> rooms = new ArrayList<>(){};
     private static List<Integer> roomCapacityArray = new ArrayList<> () {};
+    private static int[] roomBookingSlots = new int[]{10,11,12,1,2,3,4};
 
-    public static void userOptions() {
+
+    public static void initialiseBookingApplication() {
         System.out.print("Would you like to: \n a) View all rooms \n b) Make a booking \n c) View your bookings \n Please enter a b or c ");
         abc = scanner.nextLine();
         if (abc.equals("a")) {displayAllRooms(); }
@@ -74,12 +78,13 @@ public class Room {
             System.out.println("We have rooms that can host this number, but they are not available at this time.");
         }
         else {
-            suitableSizeRooms();
+            displaySuitableSizeRooms();
             }
         }
-    public static void suitableSizeRooms() {
+
+    public static void displaySuitableSizeRooms() {
         for (Room room : rooms) {
-            if (room.roomCapacity <= count){
+            if (room.roomCapacity >= count){
                 room.displayOneRoom();
             }
         }
@@ -153,6 +158,6 @@ public class Room {
                 70
         ));
 
-        userOptions();
+        initialiseBookingApplication();
     }
 }
