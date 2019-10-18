@@ -1,18 +1,55 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class Room {
     private String roomName;
     private String roomType;
     private int floorNumber;
     private int roomCapacity;
-    private int count;
+    private static int count;
+    private static int absoluteMaxCapacityVariable;
+    private int maxCapacityVariable;
 
+    private static List<Room> rooms = new ArrayList<>(){};
+    private static List<Integer> roomCapacityArray = new ArrayList<> () {};
+
+    public static void getUserInput() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("How many people would you like to book for?  ");
+        count = Integer.parseInt(scanner.nextLine());
+    }
+    public static void displayAllRooms() {
+        for (Room room: rooms) {
+            room.displayOneRoom();
+        }
+    }
     public void displayOneRoom() {
         System.out.println("Room Name: " + roomName + "\n"
                 + "Room Type: " + roomType + "\n"
                 + "Floor Number: " + floorNumber + "\n"
                 + "Room Capacity: " + roomCapacity + "\n");
+    }
+    public static void createRoomCapacityArray(){
+        for (Room room: rooms){
+            roomCapacityArray.add(room.roomCapacity);
+        }
+    }
+    public static void createAbsoluteMaxCapacityVariable(){
+        createRoomCapacityArray();
+        for (Integer eachRoomCapacity: roomCapacityArray){
+            if (eachRoomCapacity > absoluteMaxCapacityVariable) {
+                absoluteMaxCapacityVariable = eachRoomCapacity;
+            }
+        }
+    }
+
+    public static void checkAbsoluteMaxCapacity() {
+        createAbsoluteMaxCapacityVariable();
+        if (count > absoluteMaxCapacityVariable) {
+            System.out.println("It is not possible to book for more than " + absoluteMaxCapacityVariable + " people.");
+            // get user to re-enter the value
+        }
     }
 
     public Room (
@@ -28,9 +65,6 @@ public class Room {
     }
 
     public static void main(String[] args) {
-
-        List<Room> rooms = new ArrayList<>(){};
-
         rooms.add(new Room(
                 "Taff",
                 "Meeting Room",
@@ -85,9 +119,8 @@ public class Room {
                 4,
                 70
         ));
-         
-        for (Room room: rooms){
-            room.displayOneRoom();
-        }
+
+        getUserInput();
+        checkAbsoluteMaxCapacity();
     }
 }
