@@ -5,15 +5,28 @@ public class Room {
     private int roomCapacity;
     private int count;
 
+    public void displayOneRoom() {
+        System.out.println("Room Name: " + roomName);
+        System.out.println("Room Type: " + roomType);
+        System.out.println("Floor Number: " + floorNumber);
+        System.out.println("Room Capacity: " + roomCapacity);
+    }
+
+
+
     public Room (
             String roomName,
             String roomType,
             int floorNumber,
-            int roomCapacity)
+            int roomCapacity
+    ){
+        this.roomName = roomName;
+        this.roomType = roomType;
+        this.floorNumber = floorNumber;
+        this.roomCapacity = roomCapacity;
+    }
 
     public static void main(String[] args) {
-
-        room1.displayAllRooms();
 
         Room room1 = new Room(
                 "Taff",
@@ -69,5 +82,7 @@ public class Room {
                 4,
                 70
         );
+
+        room1.displayOneRoom();
     }
 }
