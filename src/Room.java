@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.List;
+
 public class Room {
     private String roomName;
     private String roomType;
@@ -9,10 +12,8 @@ public class Room {
         System.out.println("Room Name: " + roomName + "\n"
                 + "Room Type: " + roomType + "\n"
                 + "Floor Number: " + floorNumber + "\n"
-                + "Room Capacity: " + roomCapacity);
+                + "Room Capacity: " + roomCapacity + "\n");
     }
-
-
 
     public Room (
             String roomName,
@@ -28,61 +29,65 @@ public class Room {
 
     public static void main(String[] args) {
 
-        Room room1 = new Room(
+        List<Room> rooms = new ArrayList<>(){};
+
+        rooms.add(new Room(
                 "Taff",
                 "Meeting Room",
                 2,
                 8
-        );
-        Room room2 = new Room(
+        ));
+        rooms.add(new Room(
                 "Llangorse",
                 "Large meeting room",
                 2,
                 8
-        );
-        Room room3 = new Room(
+        ));
+        rooms.add(new Room(
                 "Pen y Fan",
                 "Teaching Space",
                 2,
                 70
-        );
-        Room room4 = new Room(
+        ));
+        rooms.add(new Room(
                 "Usk",
                 "Small meeting room",
                 3,
                 8
-        );
-        Room room5 = new Room(
+        ));
+        rooms.add(new Room(
                 "Bala",
                 "Large meeting room",
                 3,
                 24
-        );
-        Room room6 = new Room(
+        ));
+        rooms.add(new Room(
                 "Cadair Idris",
                 "Large teaching space",
                 3,
                 70
-        );
-        Room room7 = new Room(
+        ));
+        rooms.add(new Room(
                 "Wye",
                 "Small meeting room",
                 4,
                 8
-        );
-        Room room8 = new Room(
+        ));
+        rooms.add(new Room(
                 "Gower",
                 "Open meeting/ breakout space",
                 4,
                 70
-        );
-        Room room9 = new Room(
+        ));
+        rooms.add(new Room(
                 "Snowdon",
                 "Teaching space",
                 4,
                 70
-        );
-
-        room1.displayOneRoom();
+        ));
+        
+        for (Room room: rooms){
+            room.displayOneRoom();
+        }
     }
 }
