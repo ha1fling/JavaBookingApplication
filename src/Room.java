@@ -6,10 +6,10 @@ public class Room {
     private int count;
 
     public void displayOneRoom() {
-        System.out.println("Room Name: " + roomName);
-        System.out.println("Room Type: " + roomType);
-        System.out.println("Floor Number: " + floorNumber);
-        System.out.println("Room Capacity: " + roomCapacity);
+        System.out.println("Room Name: " + roomName + "\n"
+                + "Room Type: " + roomType + "\n"
+                + "Floor Number: " + floorNumber + "\n"
+                + "Room Capacity: " + roomCapacity);
     }
 
 
