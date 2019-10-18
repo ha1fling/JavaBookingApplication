@@ -85,7 +85,7 @@ public class Room {
                 4,
                 70
         ));
-        
+         
         for (Room room: rooms){
             room.displayOneRoom();
         }
