@@ -20,7 +20,7 @@ public class Room {
     private static String month;
     private static String day;
     private static String time;
-    private static String userName;
+    private static String storedUserName;
     private static Boolean alreadyBooked;
     private static int absoluteMaxCapacityVariable; //of all rooms
     private static Boolean roomAvailable;
@@ -36,8 +36,6 @@ public class Room {
         if (abc.equals("a")) {displayAllRooms(); }
         else if (abc.equals("b")) {
             checkAbsoluteMaxCapacity();
-//            displaySuitableRooms();
-//            checkAvailability();
         }
         else if (abc.equals("c")) {}
         else {
@@ -113,7 +111,7 @@ public class Room {
                 for(Booking booking : room.bookings) {
                     if (booking.bookingStartTime != storedDateTime) {
                         //create variable booked=false for each loop
-                        // if all variable of booked=false {SS
+                        // if all variable of booked=false {
                         room.displayOneRoom(); // and add room to suitableRoomArray
                         //{
                     } else if (booking.bookingStartTime == storedDateTime && booking.bookingActive == true) {
@@ -125,9 +123,6 @@ public class Room {
             }
         }
     }
-    public static void createBookingArray() {
-
-    }
     public static void bookRoom() {
         // user input which room they want to book
         // (room instance with roomName == (userInput)) == newVariable
@@ -137,6 +132,16 @@ public class Room {
         // add a new instance of booking to the bookings array for chosen Room instance.
         // instance will have property bookingUser = storedUserName, bookingStartTime = storedDateTime and bookingActive = true.
     }
+
+    public static void displayBookingsPerUser(Room room){
+        for(Booking booking : room.bookings) {
+            if (booking.bookingUserName == storedUserName) {
+                //make sure this happens for every booking and that it doesn't stop after the first output
+                System.out.println(storedUserName);
+        }
+    }
+}
+
 
     public Room (
             String roomName,
@@ -153,10 +158,11 @@ public class Room {
         private String bookingUserName;
         private LocalDateTime bookingStartTime;
         private Boolean bookingActive;
+        // NEED TO ADD VARIABLE FOR ROOM NAME
         public Booking (
                 String bookingUserName,
                 LocalDateTime bookingStartTime,
-                Boolean bookingActive,
+                Boolean bookingActive
         ){
             this.bookingUserName = bookingUserName;
             this.bookingStartTime = bookingStartTime;
@@ -221,7 +227,5 @@ public class Room {
         ));
 
         initialiseBookingApplication();
-
-
     }
 }
