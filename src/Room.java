@@ -111,25 +111,26 @@ public class Room {
     public static void displaySuitableRooms() {
         for (Room room : rooms) {
             checkSuitability(room);
+            // if room.suitableRoomArray.size() == 0 sout "There are no suitable rooms available at this time"
         }
         System.out.println("Hello World!");
     }
     public static void checkSuitability(Room room) {
         if (room.roomCapacity >= count) { //if count is equal or less than roomCapacity AND the room is available
             if (room.bookings.size() == 0) {
-                room.displayOneRoom(); // and add room to new array
+                room.displayOneRoom(); // and add room to suitableRoomArray
             }
             else {
                 for(Booking booking : room.bookings) {
                     if (booking.bookingStartTime != storedDateTime) {
                         //create variable booked=false for each loop
                         // if all variable of booked=false {
-                        room.displayOneRoom();
+                        room.displayOneRoom(); // and add room to suitableRoomArray
                         //{
                     } else if (booking.bookingStartTime == storedDateTime && booking.bookingActive == true) {
                         //create variable booked=false for each loop
                         // if all variable of booked=false {
-                        room.displayOneRoom();
+                        room.displayOneRoom(); // and add room to suitableRoomArray
                     }
                 }
             }
