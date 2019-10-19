@@ -94,7 +94,10 @@ public class Room {
             displaySuitableRooms();
         }
     }
-    public static void checkWeekday(){ }
+    public static void checkOpeningHours(){
+        //this method will check that the date and time entered are not a Saturday or a Sunday and are not outside of the hours 10-4
+        //this could be taken further to encorporate bank holidays and term times.
+    }
     public static void displaySuitableRooms() {
         for (Room room : rooms) {
             checkSuitability(room);
@@ -141,8 +144,6 @@ public class Room {
         }
     }
 }
-
-
     public Room (
             String roomName,
             String roomType,
