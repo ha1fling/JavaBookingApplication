@@ -1,3 +1,5 @@
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -18,12 +20,11 @@ public class Room {
     private static int maxCapacityVariable; //of rooms available at chosen time
     private static Boolean roomAvailable;
     private static Scanner scanner = new Scanner(System.in);
-
     private static List<Room> rooms = new ArrayList<>(){};
     private static List<Integer> roomCapacityArray = new ArrayList<> () {};
-
-
-
+    private static LocalDateTime storedDateTime;
+    private static DateTimeFormatter dateTimeFormatter;
+    
     public static void initialiseBookingApplication() {
         System.out.print("Would you like to: \n a) View all rooms \n b) Make a booking \n c) View your bookings \n Please enter a b or c ");
         abc = scanner.nextLine();
@@ -40,14 +41,17 @@ public class Room {
         System.out.print("How many people would you like to book for?  ");
         count = Integer.parseInt(scanner.nextLine());
     }
-//    public static void inputDateVariables() {
-//        System.out.print("");
-//        year = Integer.parseInt(scanner.nextLine());
-//        System.out.print("");
-//        month = Integer.parseInt(scanner.nextLine());
-//        System.out.print("");
-//        day = Integer.parseInt(scanner.nextLine());
-//    }
+    public static void inputDateTimeVariable() {
+        System.out.print("Enter date and time in the following format: \n where HH is the start time you want to book for in 24hr format \n dd/MM/yyyy HH ");
+        String inputDateTime = scanner.nextLine();
+        dateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH");
+        storedDateTime = LocalDateTime.parse(inputDateTime, dateTimeFormatter);
+        // check day is Monday - Friday and time is between 10 and 4
+    }
+    public static void outputDateTimeVariable() {
+        String outputDateTime = storedDateTime.format(dateTimeFormatter);
+        System.out.println(outputDateTime);
+    }
 
     public static void displayAllRooms() {
         for (Room room: rooms) {
@@ -92,20 +96,23 @@ public class Room {
             System.out.println("We have rooms that can host this number, but they are not available at this time.");
         }
         else {
-            displaySuitableSizeRooms();
+            displaySuitableRooms();
             }
         }
 //    public static void checkAvailability(){
 //        inputTimeVariable();
 //    }
     public static void checkWeekday(){ }
-    public static void displaySuitableSizeRooms() {
+    public static void displaySuitableRooms() {
         for (Room room : rooms) {
-            if (room.roomCapacity >= count){
-                room.displayOneRoom();
+            if (room.roomCapacity >= count){ //if count is equal or less than roomCapacity AND the room is available
+                //if room is available {
+                    room.displayOneRoom();
+                //}
             }
         }
     }
+
 
     public Room (
             String roomName,
@@ -175,6 +182,8 @@ public class Room {
                 70
         ));
 
-        initialiseBookingApplication();
+//        initialiseBookingApplication();
+        inputDateTimeVariable();
+        outputDateTimeVariable();
     }
 }
