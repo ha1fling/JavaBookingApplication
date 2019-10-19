@@ -47,6 +47,10 @@ public class Room {
         System.out.print("How many people would you like to book for?  ");
         count = Integer.parseInt(scanner.nextLine());
     }
+    public static void inputUserNameVariable(){
+        System.out.println("Choose a user name: ");
+        storedUserName = scanner.nextLine();
+    }
     public static void inputDateTimeVariable() {
         System.out.print("Enter date and time in the following format: \n where HH is the start time you want to book for in 24hr format \n dd/MM/yyyy HH ");
         String inputDateTime = scanner.nextLine();
@@ -58,7 +62,6 @@ public class Room {
         String outputDateTime = storedDateTime.format(dateTimeFormatter);
         System.out.println(outputDateTime);
     }
-
     public static void displayAllRooms() {
         for (Room room: rooms) {
             room.displayOneRoom();
@@ -83,7 +86,6 @@ public class Room {
             }
         }
     }
-    
     public static void checkAbsoluteMaxCapacity() {
         inputCountVariable();
         createAbsoluteMaxCapacityVariable();
@@ -94,7 +96,6 @@ public class Room {
             displaySuitableRooms();
         }
     }
-
     public static void checkWeekday(){ }
     public static void displaySuitableRooms() {
         for (Room room : rooms) {
@@ -124,6 +125,9 @@ public class Room {
             }
         }
     }
+    public static void createBookingArray() {
+
+    }
     public static void bookRoom() {
         // user input which room they want to book
         // (room instance with roomName == (userInput)) == newVariable
@@ -131,7 +135,7 @@ public class Room {
     }
     public void bookRoom2() {
         // add a new instance of booking to the bookings array for chosen Room instance.
-        // instance will have property bookingStartTime = storedDateTime and bookingActive = true.
+        // instance will have property bookingUser = storedUserName, bookingStartTime = storedDateTime and bookingActive = true.
     }
 
     public Room (
@@ -146,15 +150,15 @@ public class Room {
         this.roomCapacity = roomCapacity;
     }
     public class Booking {
-        private String bookingUser;
+        private String bookingUserName;
         private LocalDateTime bookingStartTime;
         private Boolean bookingActive;
         public Booking (
-                String bookingUser,
+                String bookingUserName,
                 LocalDateTime bookingStartTime,
-                Boolean bookingActive
+                Boolean bookingActive,
         ){
-            this.bookingUser = bookingUser;
+            this.bookingUserName = bookingUserName;
             this.bookingStartTime = bookingStartTime;
             this.bookingActive = bookingActive;
         }
