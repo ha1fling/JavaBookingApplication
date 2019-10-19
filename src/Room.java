@@ -104,11 +104,9 @@ public class Room {
         }
         else {
             displaySuitableRooms();
-            }
         }
-//    public static void checkAvailability(){
-//        inputTimeVariable();
-//    }
+    }
+
     public static void checkWeekday(){ }
     public static void displaySuitableRooms() {
         for (Room room : rooms) {
@@ -140,7 +138,7 @@ public class Room {
     public static void bookRoom() {
         // user input which room they want to book
         // (room instance with roomName == (userInput)) == newVariable
-        // newVariable.bookRoom
+        // newVariable.bookRoom2
     }
     public void bookRoom2() {
         // add a new instance of booking to the bookings array for chosen Room instance.
