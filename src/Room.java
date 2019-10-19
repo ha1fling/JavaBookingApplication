@@ -23,7 +23,6 @@ public class Room {
     private static String userName;
     private static Boolean alreadyBooked;
     private static int absoluteMaxCapacityVariable; //of all rooms
-    private static int maxCapacityVariable; //of rooms available at chosen time
     private static Boolean roomAvailable;
     private static Scanner scanner = new Scanner(System.in);
     private static List<Room> rooms = new ArrayList<>(){};
@@ -36,7 +35,7 @@ public class Room {
         abc = scanner.nextLine();
         if (abc.equals("a")) {displayAllRooms(); }
         else if (abc.equals("b")) {
-            checkMaxCapacity();
+            checkAbsoluteMaxCapacity();
 //            displaySuitableRooms();
 //            checkAvailability();
         }
@@ -84,23 +83,12 @@ public class Room {
             }
         }
     }
-
-    //this will be the variable of the max people that can be hosted at a stated time
-//    public static void createMaxCapacityVariable(){
-//        for (Integer eachRoomCapacity: roomCapacityArray){
-//            if (eachRoomCapacity > absoluteMaxCapacityVariable) {
-//                absoluteMaxCapacityVariable = eachRoomCapacity;
-//            }
-//        }
-//    }
-    public static void checkMaxCapacity() {
+    
+    public static void checkAbsoluteMaxCapacity() {
         inputCountVariable();
         createAbsoluteMaxCapacityVariable();
         if (count > absoluteMaxCapacityVariable) {
             System.out.println("It is not possible to book for more than " + absoluteMaxCapacityVariable + " people.");
-        }
-        else if (count > absoluteMaxCapacityVariable) { //this will become maxCapacityVariable when booking times have been implemented
-            System.out.println("We have rooms that can host this number, but they are not available at this time.");
         }
         else {
             displaySuitableRooms();
@@ -124,7 +112,7 @@ public class Room {
                 for(Booking booking : room.bookings) {
                     if (booking.bookingStartTime != storedDateTime) {
                         //create variable booked=false for each loop
-                        // if all variable of booked=false {
+                        // if all variable of booked=false {SS
                         room.displayOneRoom(); // and add room to suitableRoomArray
                         //{
                     } else if (booking.bookingStartTime == storedDateTime && booking.bookingActive == true) {
