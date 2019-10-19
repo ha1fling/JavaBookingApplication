@@ -9,6 +9,9 @@ public class Room {
     private int roomCapacity;
     private static int count; //user input number of people
     private static String abc; //user input a b or c
+    private static String year;
+    private static String month;
+    private static String day;
     private static String time;
     private static String userName;
     private static int absoluteMaxCapacityVariable; //of all rooms
@@ -17,7 +20,6 @@ public class Room {
     private static Scanner scanner = new Scanner(System.in);
 
     private static List<Room> rooms = new ArrayList<>(){};
-    private static List<BookingSlot> slots = new ArrayList<BookingSlot>(){};
     private static List<Integer> roomCapacityArray = new ArrayList<> () {};
 
 
@@ -27,8 +29,8 @@ public class Room {
         abc = scanner.nextLine();
         if (abc.equals("a")) {displayAllRooms(); }
         else if (abc.equals("b")) {
-//            checkMaxCapacity();
-            checkAvailability();
+            checkMaxCapacity();
+//            checkAvailability();
         }
         else if (abc.equals("c")) {}
         else {
@@ -38,10 +40,14 @@ public class Room {
         System.out.print("How many people would you like to book for?  ");
         count = Integer.parseInt(scanner.nextLine());
     }
-    public static void inputTimeVariable(){
-        System.out.print("What time would you like to book the room for? \n Options are: \n a) 10am-11am \n b) 11am-12pm \n c) 12pm-1pm \n d) 1pm-2pm \n e) 2pm-3pm \n f) 3pm-4pm \n g) 5pm-6pm");
-        time = (scanner.nextLine());
-    }
+//    public static void inputDateVariables() {
+//        System.out.print("");
+//        year = Integer.parseInt(scanner.nextLine());
+//        System.out.print("");
+//        month = Integer.parseInt(scanner.nextLine());
+//        System.out.print("");
+//        day = Integer.parseInt(scanner.nextLine());
+//    }
 
     public static void displayAllRooms() {
         for (Room room: rooms) {
@@ -89,9 +95,10 @@ public class Room {
             displaySuitableSizeRooms();
             }
         }
-    public static void checkAvailability(){
-        inputTimeVariable();
-    }
+//    public static void checkAvailability(){
+//        inputTimeVariable();
+//    }
+    public static void checkWeekday(){ }
     public static void displaySuitableSizeRooms() {
         for (Room room : rooms) {
             if (room.roomCapacity >= count){
@@ -112,59 +119,7 @@ public class Room {
         this.roomCapacity = roomCapacity;
     }
 
-     public static class BookingSlot {
-        private String startTime;
-        private String endTime;
-        private Boolean available;
-
-        public BookingSlot(
-                String startTime,
-                String endTime,
-                Boolean available
-        ) {
-            this.startTime = startTime;
-            this.endTime = endTime;
-            this.available = available;
-        }
-    }
-
     public static void main(String[] args) {
-
-        slots.add(new BookingSlot(
-                "10am",
-                "11am",
-                true
-        ));
-        slots.add(new BookingSlot(
-                "11am",
-                "12pm",
-                true
-        ));
-        slots.add(new BookingSlot(
-                "12pm",
-                "1pm",
-                true
-        ));
-        slots.add(new BookingSlot(
-                "1pm",
-                "2pm",
-                true
-        ));
-        slots.add(new BookingSlot(
-                "2pm",
-                "3pm",
-                true
-        ));
-        slots.add(new BookingSlot(
-                "3pm",
-                "4pm",
-                true
-        ));
-        slots.add(new BookingSlot(
-                "4pm",
-                "5pm",
-                true
-        ));
         rooms.add(new Room(
                 "Taff",
                 "Meeting Room",
