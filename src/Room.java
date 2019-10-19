@@ -1,3 +1,7 @@
+//import com.sun.org.apache.xpath.internal.operations.Bool;
+//import jdk.vm.ci.meta.Local;
+
+import java.awt.print.Book;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -9,6 +13,7 @@ public class Room {
     private String roomType;
     private int floorNumber;
     private int roomCapacity;
+    private List<Booking> bookings = new ArrayList<>(){};
     private static int count; //user input number of people
     private static String abc; //user input a b or c
     private static String year;
@@ -16,6 +21,7 @@ public class Room {
     private static String day;
     private static String time;
     private static String userName;
+    private static Boolean alreadyBooked;
     private static int absoluteMaxCapacityVariable; //of all rooms
     private static int maxCapacityVariable; //of rooms available at chosen time
     private static Boolean roomAvailable;
@@ -31,6 +37,7 @@ public class Room {
         if (abc.equals("a")) {displayAllRooms(); }
         else if (abc.equals("b")) {
             checkMaxCapacity();
+//            displaySuitableRooms();
 //            checkAvailability();
         }
         else if (abc.equals("c")) {}
@@ -105,14 +112,37 @@ public class Room {
     public static void checkWeekday(){ }
     public static void displaySuitableRooms() {
         for (Room room : rooms) {
-            if (room.roomCapacity >= count){ //if count is equal or less than roomCapacity AND the room is available
-                //if room is available {
-                    room.displayOneRoom();
-                //}
+            if (room.roomCapacity >= count) { //if count is equal or less than roomCapacity AND the room is available
+                if (room.bookings.size() == 0) {
+                    room.displayOneRoom(); // and add room to new array
+                }
+                else {
+                    for(Booking booking : room.bookings) {
+                        if (booking.bookingStartTime != storedDateTime) {
+                            //create variable booked=false for each loop
+                            // if all variable of booked=false {
+                            room.displayOneRoom();
+                            //{
+                        } else if (booking.bookingStartTime == storedDateTime && booking.bookingActive == true) {
+                            //create variable booked=false for each loop
+                            // if all variable of booked=false {
+                            room.displayOneRoom();
+                        }
+                    }
+                }
             }
         }
+        System.out.println("Hello World!");
     }
-
+    public static void bookRoom() {
+        // user input which room they want to book
+        // (room instance with roomName == (userInput)) == newVariable
+        // newVariable.bookRoom
+    }
+    public void bookRoom2() {
+        // add a new instance of booking to the bookings array for chosen Room instance.
+        // instance will have property bookingStartTime = storedDateTime and bookingActive = true.
+    }
 
     public Room (
             String roomName,
@@ -124,6 +154,20 @@ public class Room {
         this.roomType = roomType;
         this.floorNumber = floorNumber;
         this.roomCapacity = roomCapacity;
+    }
+    public class Booking {
+        private String bookingUser;
+        private LocalDateTime bookingStartTime;
+        private Boolean bookingActive;
+        public Booking (
+                String bookingUser,
+                LocalDateTime bookingStartTime,
+                Boolean bookingActive
+        ){
+            this.bookingUser = bookingUser;
+            this.bookingStartTime = bookingStartTime;
+            this.bookingActive = bookingActive;
+        }
     }
 
     public static void main(String[] args) {
@@ -182,8 +226,8 @@ public class Room {
                 70
         ));
 
-//        initialiseBookingApplication();
-        inputDateTimeVariable();
-        outputDateTimeVariable();
+        initialiseBookingApplication();
+
+
     }
 }
