@@ -10,6 +10,7 @@ import java.util.Scanner;
 
 public class Room {
     private String roomName;
+    private int roomCode;
     private String roomType;
     private int floorNumber;
     private int roomCapacity;
@@ -22,7 +23,7 @@ public class Room {
     private static String time;
     private static String storedUserName;
     private static Boolean alreadyBooked;
-    private static int absoluteMaxCapacityVariable; //of all rooms
+    private static int absoluteMaxCapacityVariable;
     private static Boolean roomAvailable;
     private static Scanner scanner = new Scanner(System.in);
     private static List<Room> rooms = new ArrayList<>(){};
@@ -96,7 +97,7 @@ public class Room {
     }
     public static void checkOpeningHours(){
         //this method will check that the date and time entered are not a Saturday or a Sunday and are not outside of the hours 10-4
-        //this could be taken further to encorporate bank holidays and term times.
+        //this could be taken further to incorporate bank holidays and term times.
     }
     public static void displaySuitableRooms() {
         for (Room room : rooms) {
@@ -106,6 +107,7 @@ public class Room {
         System.out.println("Hello World!");
     }
     public static void checkSuitability(Room room) {
+        // at the beginning of the method suitabilityRoomArray length needs to be set back to zero
         if (room.roomCapacity >= count) { //if count is equal or less than roomCapacity AND the room is available
             if (room.bookings.size() == 0) {
                 room.displayOneRoom(); // and add room to suitableRoomArray
@@ -128,10 +130,13 @@ public class Room {
     }
     public static void bookRoom() {
         // user input which room they want to book
+        // run checkSuitability method against that room
+        // if length of suitabilityRoomArrray equals 1 continue
+        // else tell the user that they cannot book that room for their time and number of people
         // (room instance with roomName == (userInput)) == newVariable
-        // newVariable.bookRoom2
+        // newVariable.addBookingToBookingsArray
     }
-    public void bookRoom2() {
+    public void addBookingToBookingsArray() {
         // add a new instance of booking to the bookings array for chosen Room instance.
         // instance will have property bookingUser = storedUserName, bookingStartTime = storedDateTime and bookingActive = true.
     }
@@ -146,11 +151,13 @@ public class Room {
 }
     public Room (
             String roomName,
+            int roomCode,
             String roomType,
             int floorNumber,
             int roomCapacity
     ){
         this.roomName = roomName;
+        this.roomCode = roomCode;
         this.roomType = roomType;
         this.floorNumber = floorNumber;
         this.roomCapacity = roomCapacity;
@@ -174,54 +181,63 @@ public class Room {
     public static void main(String[] args) {
         rooms.add(new Room(
                 "Taff",
+                201,
                 "Meeting Room",
                 2,
                 8
         ));
         rooms.add(new Room(
                 "Llangorse",
+                202,
                 "Large meeting room",
                 2,
                 8
         ));
         rooms.add(new Room(
                 "Pen y Fan",
+                203,
                 "Teaching Space",
                 2,
                 70
         ));
         rooms.add(new Room(
                 "Usk",
+                301,
                 "Small meeting room",
                 3,
                 8
         ));
         rooms.add(new Room(
                 "Bala",
+                302,
                 "Large meeting room",
                 3,
                 24
         ));
         rooms.add(new Room(
                 "Cadair Idris",
+                303,
                 "Large teaching space",
                 3,
                 70
         ));
         rooms.add(new Room(
                 "Wye",
+                401,
                 "Small meeting room",
                 4,
                 8
         ));
         rooms.add(new Room(
                 "Gower",
+                402,
                 "Open meeting/ breakout space",
                 4,
                 70
         ));
         rooms.add(new Room(
                 "Snowdon",
+                403,
                 "Teaching space",
                 4,
                 70
