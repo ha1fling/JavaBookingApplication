@@ -15,6 +15,7 @@ public class Room {
     private int floorNumber;
     private int roomCapacity;
     private List<Booking> bookings = new ArrayList<>(){};
+    private static List<Room> suitableRooms = new ArrayList<>(){};
     private static int count; //user input number of people
     private static String abc; //user input a b or c
     private static String year;
@@ -107,7 +108,7 @@ public class Room {
     public static void displaySuitableRooms() {
         for (Room room : rooms) {
             checkSuitability(room);
-            // if room.suitableRoomArray.size() == 0 sout "There are no suitable rooms available at this time"
+            // if room.suitableRooms.size() == 0 sout "There are no suitable rooms available at this time"
         }
         System.out.println("Hello World!");
     }
@@ -115,19 +116,19 @@ public class Room {
         // at the beginning of the method suitabilityRoomArray length needs to be set back to zero
         if (room.roomCapacity >= count) { //if count is equal or less than roomCapacity AND the room is available
             if (room.bookings.size() == 0) {
-                room.displayOneRoom(); // and add room to suitableRoomArray
+                room.displayOneRoom(); // and add room to suitableRooms
             }
             else {
                 for(Booking booking : room.bookings) {
                     if (booking.bookingStartTime != storedDateTime) {
                         //create variable booked=false for each loop
                         // if all variable of booked=false {
-                        room.displayOneRoom(); // and add room to suitableRoomArray
+                        room.displayOneRoom(); // and add room to suitableRooms
                         //{
                     } else if (booking.bookingStartTime == storedDateTime && booking.bookingActive == true) {
                         //create variable booked=false for each loop
                         // if all variable of booked=false {
-                        room.displayOneRoom(); // and add room to suitableRoomArray
+                        room.displayOneRoom(); // and add room to suitableRooms
                     }
                 }
             }
@@ -136,7 +137,7 @@ public class Room {
     public static void bookRoom() {
          inputRequestedRoomCode();
          checkSuitability(rooms.get(requestedRoomCode-101));
-         if (roomSuitabilityArray.size()= 1) {
+         if (suitableRooms.size() == 1) {
              rooms.get(requestedRoomCode-101).addBookingToBookingArray();
          }
          else System.out.println("This room is not available please enter another room code" );
