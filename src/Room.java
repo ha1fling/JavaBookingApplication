@@ -18,15 +18,10 @@ public class Room {
     private static List<Room> suitableRooms = new ArrayList<>(){};
     private static int count; //user input number of people
     private static String abc; //user input a b or c
-    private static String year;
-    private static String month;
-    private static String day;
-    private static String time;
     private static String storedUserName;
     private static int requestedRoomCode;
     private static Boolean alreadyBooked;
-    private static int absoluteMaxCapacityVariable;
-    private static Boolean roomAvailable;
+    private static int maxCapacityVariable;
     private static Scanner scanner = new Scanner(System.in);
     private static List<Room> rooms = new ArrayList<>(){};
     private static List<Integer> roomCapacityArray = new ArrayList<> () {};
@@ -34,27 +29,24 @@ public class Room {
     private static DateTimeFormatter dateTimeFormatter;
     
     public static void initialiseBookingApplication() {
+        inputUserNameVariable();
         System.out.print("Would you like to: \n a) View all rooms \n b) Make a booking \n c) View your bookings \n Please enter a b or c ");
         abc = scanner.nextLine();
-        if (abc.equals("a")) {displayAllRooms(); }
-        else if (abc.equals("b")) {
-            checkAbsoluteMaxCapacity();
+        if (abc.equals("a")) {
+            displayAllRooms();
         }
-        else if (abc.equals("c")) {}
+        else if (abc.equals("b")) {
+            inputDateTimeVariable();
+        }
+        else if (abc.equals("c")) {
+//            displayBookingsPerUser();
+        }
         else {
             System.out.println("Please enter a, b or c");}
     }
-    public static void inputCountVariable(){
-        System.out.print("How many people would you like to book for?  ");
-        count = Integer.parseInt(scanner.nextLine());
-    }
     public static void inputUserNameVariable(){
-        System.out.println("Choose a user name: ");
+        System.out.println("Input username: ");
         storedUserName = scanner.nextLine();
-    }
-    public static void inputRequestedRoomCode(){
-        System.out.println("Please enter the room code for the room you would like to book: ");
-        requestedRoomCode = Integer.parseInt(scanner.nextLine());
     }
     public static void inputDateTimeVariable() {
         System.out.print("Enter date and time in the following format: \n where HH is the start time you want to book for in 24hr format \n dd/MM/yyyy HH ");
@@ -62,10 +54,20 @@ public class Room {
         dateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH");
         storedDateTime = LocalDateTime.parse(inputDateTime, dateTimeFormatter);
         // check day is Monday - Friday and time is between 10 and 4
+        inputCountVariable();
     }
     public static void outputDateTimeVariable() {
         String outputDateTime = storedDateTime.format(dateTimeFormatter);
         System.out.println(outputDateTime);
+    }
+    public static void inputCountVariable(){
+        System.out.print("How many people would you like to book for?  ");
+        count = Integer.parseInt(scanner.nextLine());
+        checkMaxCapacity();
+    }
+    public static void inputRequestedRoomCode(){
+        System.out.println("Please enter the room code for the room you would like to book: ");
+        requestedRoomCode = Integer.parseInt(scanner.nextLine());
     }
     public static void displayAllRooms() {
         for (Room room: rooms) {
@@ -74,28 +76,29 @@ public class Room {
     }
     public void displayOneRoom() {
         System.out.println("Room Name: " + roomName + "\n"
+                + "Room Code: " + roomCode + "\n"
                 + "Room Type: " + roomType + "\n"
                 + "Floor Number: " + floorNumber + "\n"
                 + "Room Capacity: " + roomCapacity + "\n");
     }
     public static void createRoomCapacityArray(){
+        roomCapacityArray.clear();
         for (Room room: rooms){
             roomCapacityArray.add(room.roomCapacity);
         }
     }
-    public static void createAbsoluteMaxCapacityVariable(){
+    public static void createMaxCapacityVariable(){
         createRoomCapacityArray();
         for (Integer eachRoomCapacity: roomCapacityArray){
-            if (eachRoomCapacity > absoluteMaxCapacityVariable) {
-                absoluteMaxCapacityVariable = eachRoomCapacity;
+            if (eachRoomCapacity > maxCapacityVariable) {
+                maxCapacityVariable = eachRoomCapacity;
             }
         }
     }
-    public static void checkAbsoluteMaxCapacity() {
-        inputCountVariable();
-        createAbsoluteMaxCapacityVariable();
-        if (count > absoluteMaxCapacityVariable) {
-            System.out.println("It is not possible to book for more than " + absoluteMaxCapacityVariable + " people.");
+    public static void checkMaxCapacity() {
+        createMaxCapacityVariable();
+        if (count > maxCapacityVariable) {
+            System.out.println("It is not possible to book for more than " + maxCapacityVariable + " people.");
         }
         else {
             displaySuitableRooms();
@@ -106,46 +109,55 @@ public class Room {
         //this could be taken further to incorporate bank holidays and term times.
     }
     public static void displaySuitableRooms() {
+        suitableRooms.clear();
         for (Room room : rooms) {
-            checkSuitability(room); {
-                 if (room.suitableRooms.size() == 0); {
-                    System.out.println("There are no suitable rooms available at this time");
-                 }
-            }
+            checkSuitability(room);
         }
-        System.out.println("Hello World!");
+        if (suitableRooms.size() == 1) {
+            System.out.println("There are no rooms available for your party size and time" );
+        }
+        else bookRoom() ;
     }
     public static void checkSuitability(Room room) {
-        // at the beginning of the method suitabilityRoomArray length needs to be set back to zero
         if (room.roomCapacity >= count) { //if count is equal or less than roomCapacity AND the room is available
             if (room.bookings.size() == 0) {
                 room.displayOneRoom(); // and add room to suitableRooms
-            }
-            else {
-                for(Booking booking : room.bookings) {
+                suitableRooms.add(room); // and add room to suitableRooms
+            } else {
+                for (Booking booking : room.bookings) {
                     if (booking.bookingStartTime != storedDateTime) {
                         //create variable booked=false for each loop
                         // if all variable of booked=false {
-                        room.displayOneRoom() && ; // and add room to suitableRooms
+                        room.displayOneRoom();
+                        suitableRooms.add(room); // and add room to suitableRooms
                         //{
                     } else if (booking.bookingStartTime == storedDateTime && booking.bookingActive == true) {
                         //create variable booked=false for each loop
                         // if all variable of booked=false {
-                        room.displayOneRoom(); // and add room to suitableRooms
+                        room.displayOneRoom();// and add room to suitableRooms
+                        suitableRooms.add(room); // and add room to suitableRooms
                     }
                 }
             }
         }
     }
     public static void bookRoom() {
-         inputRequestedRoomCode();
+        inputRequestedRoomCode();
+        suitableRooms.clear();
          checkSuitability(rooms.get(requestedRoomCode-101));
          if (suitableRooms.size() == 1) {
              rooms.get(requestedRoomCode-101).addBookingToBookingsArray();
+             System.out.println("You have booked room " + rooms.get(requestedRoomCode-101).roomName + " for " + storedDateTime + " under the name " + storedUserName + ".");
          }
          else System.out.println("This room is not available please enter another room code" );
     }
     public void addBookingToBookingsArray() {
+        bookings.add(new Booking (
+                storedUserName,
+                storedDateTime,
+                true, //if user wanted to cancel this could be turned to false in future code
+                rooms.get(requestedRoomCode-101).roomName
+        ));
         // add a new instance of booking to the bookings array for chosen Room instance.
         // instance will have property bookingUser = storedUserName, bookingStartTime = storedDateTime and bookingActive = true.
     }
@@ -175,15 +187,17 @@ public class Room {
         private String bookingUserName;
         private LocalDateTime bookingStartTime;
         private Boolean bookingActive;
-        // NEED TO ADD VARIABLE FOR ROOM NAME
+        private String bookingRoomName;
         public Booking (
                 String bookingUserName,
                 LocalDateTime bookingStartTime,
-                Boolean bookingActive
+                Boolean bookingActive,
+                String bookingRoomName
         ){
             this.bookingUserName = bookingUserName;
             this.bookingStartTime = bookingStartTime;
             this.bookingActive = bookingActive;
+            this.bookingRoomName = bookingRoomName;
         }
     }
 
