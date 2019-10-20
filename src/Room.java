@@ -22,6 +22,7 @@ public class Room {
     private static String day;
     private static String time;
     private static String storedUserName;
+    private static int requestedRoomCode;
     private static Boolean alreadyBooked;
     private static int absoluteMaxCapacityVariable;
     private static Boolean roomAvailable;
@@ -49,6 +50,10 @@ public class Room {
     public static void inputUserNameVariable(){
         System.out.println("Choose a user name: ");
         storedUserName = scanner.nextLine();
+    }
+    public static void inputRequestedRoomCode(){
+        System.out.println("Please enter the room code for the room you would like to book: ");
+        requestedRoomCode = Integer.parseInt(scanner.nextLine());
     }
     public static void inputDateTimeVariable() {
         System.out.print("Enter date and time in the following format: \n where HH is the start time you want to book for in 24hr format \n dd/MM/yyyy HH ");
@@ -129,12 +134,12 @@ public class Room {
         }
     }
     public static void bookRoom() {
-        // user input which room they want to book
-        // run checkSuitability method against that room
-        // if length of suitabilityRoomArrray equals 1 continue
-        // else tell the user that they cannot book that room for their time and number of people
-        // (room instance with roomName == (userInput)) == newVariable
-        // newVariable.addBookingToBookingsArray
+         inputRequestedRoomCode();
+         checkSuitability(rooms.get(requestedRoomCode-101));
+         if (roomSuitabilityArray.size()= 1) {
+             rooms.get(requestedRoomCode-101).addBookingToBookingArray();
+         }
+         else System.out.println("This room is not available please enter another room code" );
     }
     public void addBookingToBookingsArray() {
         // add a new instance of booking to the bookings array for chosen Room instance.
@@ -181,63 +186,63 @@ public class Room {
     public static void main(String[] args) {
         rooms.add(new Room(
                 "Taff",
-                201,
+                101,
                 "Meeting Room",
                 2,
                 8
         ));
         rooms.add(new Room(
                 "Llangorse",
-                202,
+                102,
                 "Large meeting room",
                 2,
                 8
         ));
         rooms.add(new Room(
                 "Pen y Fan",
-                203,
+                103,
                 "Teaching Space",
                 2,
                 70
         ));
         rooms.add(new Room(
                 "Usk",
-                301,
+                104,
                 "Small meeting room",
                 3,
                 8
         ));
         rooms.add(new Room(
                 "Bala",
-                302,
+                105,
                 "Large meeting room",
                 3,
                 24
         ));
         rooms.add(new Room(
                 "Cadair Idris",
-                303,
+                106,
                 "Large teaching space",
                 3,
                 70
         ));
         rooms.add(new Room(
                 "Wye",
-                401,
+                107,
                 "Small meeting room",
                 4,
                 8
         ));
         rooms.add(new Room(
                 "Gower",
-                402,
+                108,
                 "Open meeting/ breakout space",
                 4,
                 70
         ));
         rooms.add(new Room(
                 "Snowdon",
-                403,
+                109,
                 "Teaching space",
                 4,
                 70
