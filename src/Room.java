@@ -107,8 +107,11 @@ public class Room {
     }
     public static void displaySuitableRooms() {
         for (Room room : rooms) {
-            checkSuitability(room);
-            // if room.suitableRooms.size() == 0 sout "There are no suitable rooms available at this time"
+            checkSuitability(room); {
+                 if (room.suitableRooms.size() == 0); {
+                    System.out.println("There are no suitable rooms available at this time");
+                 }
+            }
         }
         System.out.println("Hello World!");
     }
@@ -123,7 +126,7 @@ public class Room {
                     if (booking.bookingStartTime != storedDateTime) {
                         //create variable booked=false for each loop
                         // if all variable of booked=false {
-                        room.displayOneRoom(); // and add room to suitableRooms
+                        room.displayOneRoom() && ; // and add room to suitableRooms
                         //{
                     } else if (booking.bookingStartTime == storedDateTime && booking.bookingActive == true) {
                         //create variable booked=false for each loop
@@ -138,7 +141,7 @@ public class Room {
          inputRequestedRoomCode();
          checkSuitability(rooms.get(requestedRoomCode-101));
          if (suitableRooms.size() == 1) {
-             rooms.get(requestedRoomCode-101).addBookingToBookingArray();
+             rooms.get(requestedRoomCode-101).addBookingToBookingsArray();
          }
          else System.out.println("This room is not available please enter another room code" );
     }
