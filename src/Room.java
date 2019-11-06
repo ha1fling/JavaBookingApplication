@@ -1,7 +1,6 @@
 //import com.sun.org.apache.xpath.internal.operations.Bool;
 //import jdk.vm.ci.meta.Local;
-
-import java.awt.print.Book;
+//import java.awt.print.Book;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -14,12 +13,13 @@ public class Room {
     private String roomType;
     private int floorNumber;
     private int roomCapacity;
-    private List<Booking> bookings = new ArrayList<>(){};
+    private List<Booking> bookings = new ArrayList<>(){}; // does this need to be static?
     private static List<Room> suitableRooms = new ArrayList<>(){};
     private static int count; //user input number of people
     private static String abc; //user input a b or c
     private static String storedUserName;
     private static int requestedRoomCode;
+    private static int requestedRoomIndex;
     private static Boolean alreadyBooked;
     private static int maxCapacityVariable;
     private static Scanner scanner = new Scanner(System.in);
@@ -30,21 +30,31 @@ public class Room {
     private static DateTimeFormatter dateTimeFormatter;
     
     public static void initialiseBookingApplication() {
-        inputUserNameVariable();
+
         System.out.print("Would you like to: \n a) View all rooms \n b) Make a booking \n c) View your bookings \n Please enter a b or c ");
         abc = scanner.nextLine();
         if (abc.equals("a")) {
             displayAllRooms();
+            initialiseBookingApplication();
         }
         else if (abc.equals("b")) {
+            inputUserNameVariable();
             inputDateTimeVariable();
+            initialiseBookingApplication();
         }
         else if (abc.equals("c")) {
-//            displayBookingsPerUser();
+            displayBookingsPerUser();
+            initialiseBookingApplication();
         }
+        //else if (abcd.equals("d")) {
+        //inputUserNameVariable(); // this will overwrite the current user name variable
         else {
+            inputUserNameVariable();
             System.out.println("Please enter a, b or c");}
+            // check that a b or c is entered
+            // ask the user to only input a b or c
     }
+    // create a class that allows the user to choose whether they want to be returned to the main menu
     public static void inputUserNameVariable(){
         System.out.println("Input username: ");
         storedUserName = scanner.nextLine();
@@ -55,6 +65,7 @@ public class Room {
         dateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH");
         storedDateTime = LocalDateTime.parse(inputDateTime, dateTimeFormatter);
         outputDateTime = storedDateTime.format(dateTimeFormatter);
+        // check format is entered correctly
         // check day is Monday - Friday and time is between 10 and 4
         inputCountVariable();
     }
@@ -62,10 +73,15 @@ public class Room {
         System.out.print("How many people would you like to book for?  ");
         count = Integer.parseInt(scanner.nextLine());
         checkMaxCapacity();
+        // Check that a number is entered
     }
     public static void inputRequestedRoomCode(){
         System.out.println("Please enter the room code for the room you would like to book: ");
         requestedRoomCode = Integer.parseInt(scanner.nextLine());
+        // catch error
+    }
+    public static void createRequestedRoomIndexVariable() {
+        requestedRoomIndex = requestedRoomCode-101;
     }
     public static void displayAllRooms() {
         for (Room room: rooms) {
@@ -141,11 +157,12 @@ public class Room {
     }
     public static void bookRoom() {
         inputRequestedRoomCode();
+        createRequestedRoomIndexVariable();
         suitableRooms.clear();
-         checkSuitability(rooms.get(requestedRoomCode-101));
+         checkSuitability(rooms.get(requestedRoomIndex));
          if (suitableRooms.size() == 1) {
-             rooms.get(requestedRoomCode-101).addBookingToBookingsArray();
-             System.out.println("You have booked room " + rooms.get(requestedRoomCode-101).roomName + " for " + outputDateTime + " o'clock, under the name " + storedUserName + ".");
+             rooms.get(requestedRoomIndex).addBookingToBookingsArray();
+             System.out.println("You have booked room " + rooms.get(requestedRoomIndex).roomName + " for " + outputDateTime + " o'clock, under the name " + storedUserName + ".");
          }
          else System.out.println("This room is not available please enter another room code" );
     }
@@ -154,20 +171,23 @@ public class Room {
                 storedUserName,
                 storedDateTime,
                 true, //if user wanted to cancel this could be turned to false in future code
-                rooms.get(requestedRoomCode-101).roomName
+                rooms.get(requestedRoomIndex).roomName
         ));
         // add a new instance of booking to the bookings array for chosen Room instance.
         // instance will have property bookingUser = storedUserName, bookingStartTime = storedDateTime and bookingActive = true.
     }
 
-    public static void displayBookingsPerUser(Room room){
-        for(Booking booking : room.bookings) {
-            if (booking.bookingUserName == storedUserName) {
-                //make sure this happens for every booking and that it doesn't stop after the first output
-                System.out.println(storedUserName);
+    public static void displayBookingsPerUser(){
+        for (Room room: rooms){
+            for(Booking booking : room.bookings) {
+                if (booking.bookingUserName == storedUserName) {
+                    //make sure this happens for every booking and that it doesn't stop after the first output
+                    System.out.println("You have booked room " + rooms.get(requestedRoomIndex).roomName + " for " + outputDateTime + " o'clock, under the name " + storedUserName + ".");
+                }
+                else System.out.println("There are no rooms booked under the name " + storedUserName + ".");
+            }
         }
     }
-}
     public Room (
             String roomName,
             int roomCode,
