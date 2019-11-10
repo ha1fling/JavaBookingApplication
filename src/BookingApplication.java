@@ -23,7 +23,7 @@ public class BookingApplication {
 
     private static List<Room> suitableRooms = new ArrayList<>(){};
     private static String input;
-    private static int count; //user input number of people
+    private static int count;
     private static String storedUserName;
     private static int requestedRoomCode;
     private static int requestedRoomIndex;
@@ -102,8 +102,8 @@ public class BookingApplication {
                 70
         ));
     }
-
     public static void initialiseBookingApplication() {
+
         System.out.print("Would you like to: \n a) View all rooms \n b) Make a booking \n c) View your bookings \n d) Change username \n Please enter a b c or d");
         userInput();
         switch (input.toLowerCase()) {
@@ -111,14 +111,12 @@ public class BookingApplication {
                 displayAllRooms();
                 toMainMenu();
             case "b":
-                inputUserNameVariable();
                 inputDateTimeVariable();
                 inputCountVariable();
                 displaySuitableRooms();
                 bookRoom();
                 toMainMenu();
             case "c":
-                inputUserNameVariable();
                 displayBookingsPerUser();
                 toMainMenu();
             case "d":
@@ -141,7 +139,6 @@ public class BookingApplication {
                 System.exit(0);
         }
     }
-
     public static void inputUserNameVariable(){
         System.out.println("Input username up to 10 characters (if you enter over 20 your username will be cropped to 20): ");
         userInput();
@@ -222,7 +219,6 @@ public class BookingApplication {
             System.out.println("There are no rooms available for your party size and time" );
         }
     }
-
     public static void bookRoom() {
         while (correctFormat == false) {
             try {
@@ -244,8 +240,6 @@ public class BookingApplication {
         } else System.out.println("This room is not available please enter another room code");
         correctFormat = false;
     }
-
-
     public static void displayBookingsPerUser(){
         for (Room room: rooms) {
             if (room.getBookings().size() == 0) {
@@ -265,6 +259,7 @@ public class BookingApplication {
     public static void main(String[] args) {
         try {
             populateRoomsArray();
+            inputUserNameVariable();
             initialiseBookingApplication();
         }
         catch(Exception e) {
