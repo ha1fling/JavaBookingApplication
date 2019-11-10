@@ -5,21 +5,6 @@ import java.util.List;
 import java.util.Scanner;
 
 public class BookingApplication {
-    public static List<Room> getSuitableRooms() {
-        return suitableRooms;
-    }
-
-    public static int getCount() {
-        return count;
-    }
-
-    public static String getStoredUserName() {
-        return storedUserName;
-    }
-
-    public static LocalDateTime getStoredDateTime() {
-        return storedDateTime;
-    }
 
     private static List<Room> suitableRooms = new ArrayList<>(){};
     private static String input;
@@ -103,7 +88,6 @@ public class BookingApplication {
         ));
     }
     public static void initialiseBookingApplication() {
-
         System.out.print("Would you like to: \n a) View all rooms \n b) Make a booking \n c) View your bookings \n d) Change username \n Please enter a b c or d");
         userInput();
         switch (input.toLowerCase()) {
@@ -137,6 +121,9 @@ public class BookingApplication {
                 initialiseBookingApplication();
             case "n":
                 System.exit(0);
+            default:
+                System.out.println("Please enter yes/y or no/n.");
+                toMainMenu();
         }
     }
     public static void inputUserNameVariable(){
@@ -266,5 +253,20 @@ public class BookingApplication {
             System.out.println("The application has run into an unexpected error.");
             toMainMenu();
         }
+    }
+    public static List<Room> getSuitableRooms() {
+        return suitableRooms;
+    }
+
+    public static int getCount() {
+        return count;
+    }
+
+    public static String getStoredUserName() {
+        return storedUserName;
+    }
+
+    public static LocalDateTime getStoredDateTime() {
+        return storedDateTime;
     }
 }
