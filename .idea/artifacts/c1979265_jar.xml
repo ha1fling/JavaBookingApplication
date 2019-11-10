@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="c1979265:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/c1979265_jar</output-path>
+    <root id="archive" name="BookingApplication.jar">
+      <element id="module-output" name="BookingApplication" />
+    </root>
+  </artifact>
+</component>

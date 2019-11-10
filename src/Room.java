@@ -7,7 +7,6 @@ public class Room {
     private String roomType;
     private int floorNumber;
     private int roomCapacity;
-    private List<Booking> bookings = new ArrayList<>(){};
 
     public Room (
             String roomName,
@@ -30,6 +29,10 @@ public class Room {
                 + "Floor Number: " + floorNumber + "\n"
                 + "Room Capacity: " + roomCapacity + "\n");
     }
+
+    //This method checks whether a room's capacity is large enough to hold the number of guests that the user wants to
+    //book for and whether the room is available at the time the user wants to book for
+    //It adds each suitable room to the suitableRooms array
     public void checkSuitability() {
         if (roomCapacity >= BookingApplication.getCount() && bookings.size() == 0 ) { //
             displayOneRoom();
@@ -44,6 +47,10 @@ public class Room {
             }
         }
     }
+
+    //Initialise array for bookings
+    private List<Booking> bookings = new ArrayList<>(){};
+    //Method to create booking objects from booking class
     public void addBookingToBookingsArray() {
         bookings.add(new Booking(
                 BookingApplication.getStoredUserName(),
@@ -53,6 +60,7 @@ public class Room {
         ));
     }
 
+    //Getters
     public String getRoomName() {
         return roomName;
     }

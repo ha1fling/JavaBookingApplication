@@ -4,8 +4,9 @@ public class Booking {
     private String bookingUserName;
     private LocalDateTime bookingStartTime;
     private Boolean bookingActive;
-
     private String bookingRoomName;
+
+    //Create class blueprint for booking objects to be created from
     public Booking (
             String bookingUserName,
             LocalDateTime bookingStartTime,
@@ -18,6 +19,7 @@ public class Booking {
         this.bookingRoomName = bookingRoomName;
     }
 
+    //Getters
     public String getBookingUserName() {
         return bookingUserName;
     }
